@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Bhanu Pratap — Fullstack Developer</title>
+    <meta
+      name="description"
+      content="Portfolio — Bhanu Pratap Singh, Fullstack Developer. React, Next.js, Node.js, D3.js, Cloud (Azure/AWS)."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>"
+    />
+    <style>
+      /* CSS Reset-ish */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial;
+        line-height: 1.45;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      :root {
+        --bg: #0f172a;
+        --card: #1e293b;
+        --card-hover: #334155;
+        --muted: #94a3b8;
+        --accent: #06b6d4;
+        --accent-secondary: #3b82f6;
+        --accent-tertiary: #8b5cf6;
+        --text: #f1f5f9;
+        --text-secondary: #e2e8f0;
+        --glass: rgba(255, 255, 255, 0.08);
+        --glass-strong: rgba(255, 255, 255, 0.12);
+        --glass-border: rgba(255, 255, 255, 0.15);
+        --radius: 20px;
+        --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+        --shadow-glow: 0 0 40px rgba(6, 182, 212, 0.15);
+        --max-width: 1200px;
+        --gap: 24px;
+        --gradient-primary: linear-gradient(135deg, #06b6d4, #3b82f6, #8b5cf6);
+        --gradient-card: #1e293b;
+        --border-glow: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.3), transparent);
+        --timeline-bg: #1e293b;
+        --timeline-border: rgba(255, 255, 255, 0.1);
+      }
+      /* light theme */
+      .light {
+        --bg: #ffffff;
+        --card: #f8fafc;
+        --card-hover: #e2e8f0;
+        --muted: #475569;
+        --accent: #0ea5e9;
+        --accent-secondary: #3b82f6;
+        --accent-tertiary: #8b5cf6;
+        --text: #0f172a;
+        --text-secondary: #1e293b;
+        --glass: rgba(15, 23, 42, 0.08);
+        --glass-strong: rgba(15, 23, 42, 0.12);
+        --glass-border: rgba(15, 23, 42, 0.15);
+        --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        --shadow-glow: 0 0 40px rgba(14, 165, 233, 0.1);
+        --gradient-primary: linear-gradient(135deg, #0ea5e9, #3b82f6, #8b5cf6);
+        --gradient-card: #f8fafc;
+        --border-glow: linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.2), transparent);
+        --timeline-bg: #f8fafc;
+        --timeline-border: rgba(15, 23, 42, 0.1);
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        padding: 32px;
+        display: flex;
+        justify-content: center;
+        min-height: 100vh;
+        position: relative;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .wrap {
+        max-width: var(--max-width);
+        width: 100%;
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        gap: var(--gap);
+        align-items: start;
+        position: relative;
+        z-index: 1;
+      }
+      @media (max-width: 1024px) {
+        .wrap {
+          grid-template-columns: 1fr;
+          max-width: 800px;
+          gap: calc(var(--gap) * 1.5);
+        }
+        body {
+          padding: 20px;
+        }
+      }
+      @media (max-width: 640px) {
+        body {
+          padding: 16px;
+        }
+        .wrap {
+          gap: 20px;
+        }
+      }
+
+      /* Sidebar */
+      .sidebar {
+        background: var(--bg);
+        backdrop-filter: blur(20px);
+        border: 2px solid var(--glass-border);
+        border-radius: var(--radius);
+        padding: 32px;
+        box-shadow: var(--shadow), var(--shadow-glow);
+        position: sticky;
+        top: 32px;
+        overflow: hidden;
+      }
+      .sidebar::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--gradient-primary);
+        opacity: 0.6;
+      }
+      .avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 20px;
+        background: var(--gradient-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 32px;
+        color: #ffffff;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 32px rgba(6, 182, 212, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+      .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 20px;
+      }
+      .avatar::before {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        background: var(--gradient-primary);
+        border-radius: 22px;
+        z-index: -1;
+        opacity: 0.8;
+      }
+      h1 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .muted {
+        color: var(--muted);
+        font-size: 16px;
+        margin-top: 8px;
+        font-weight: 500;
+      }
+      .bio {
+        margin-top: 20px;
+        font-size: 15px;
+        color: var(--text);
+        opacity: 0.9;
+        line-height: 1.6;
+      }
+
+      .meta {
+        margin-top: 24px;
+        font-size: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .pill {
+        background: var(--glass-strong);
+        backdrop-filter: blur(10px);
+        padding: 12px 16px;
+        border-radius: 12px;
+        font-weight: 600;
+        color: var(--text);
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid var(--glass);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .pill:hover {
+        transform: translateY(-2px);
+        background: var(--glass-strong);
+        border-color: var(--accent);
+        box-shadow: 0 8px 25px rgba(6, 182, 212, 0.15);
+      }
+      .pill::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--border-glow);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .pill:hover::before {
+        opacity: 1;
+      }
+
+      .toggle {
+        margin-top: 24px;
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .theme-switch {
+        height: 40px;
+        width: 76px;
+        background: var(--glass-strong);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--glass);
+        border-radius: 999px;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+      .theme-switch:hover {
+        border-color: var(--accent);
+        box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+      }
+      .theme-knob {
+        height: 32px;
+        width: 32px;
+        border-radius: 50%;
+        background: var(--gradient-primary);
+        box-shadow: 0 4px 12px rgba(6, 182, 212, 0.4);
+        transform: translateX(0);
+        transition: transform 0.3s ease;
+        position: relative;
+      }
+      .theme-knob::before {
+        content: '🌙';
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        transition: opacity 0.3s ease;
+      }
+      .light .theme-knob::before {
+        content: '☀️';
+      }
+      .light .theme-knob {
+        transform: translateX(36px);
+      }
+      .small {
+        font-size: 14px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+
+      .skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      .skill {
+        background: var(--glass-strong);
+        backdrop-filter: blur(10px);
+        padding: 10px 14px;
+        border-radius: 12px;
+        font-weight: 600;
+        color: var(--text);
+        font-size: 13px;
+        border: 1px solid var(--glass);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .skill:hover {
+        transform: translateY(-2px) scale(1.05);
+        background: var(--accent);
+        color: #ffffff;
+        box-shadow: 0 8px 25px rgba(6, 182, 212, 0.3);
+      }
+
+      /* main content */
+      main {
+        min-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap);
+      }
+      .card {
+        background: var(--card);
+        backdrop-filter: blur(25px);
+        border: 2px solid var(--glass-border);
+        border-radius: var(--radius);
+        padding: 32px;
+        box-shadow: var(--shadow), var(--shadow-glow);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--gradient-primary);
+        opacity: 0.7;
+      }
+      .card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow), 0 0 80px rgba(6, 182, 212, 0.25);
+        border-color: var(--accent);
+        background: var(--card-hover);
+      }
+
+      .hero {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .hero-left h2 {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 800;
+        letter-spacing: -0.025em;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.2;
+      }
+      .role {
+        color: var(--muted);
+        margin-top: 12px;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .cta {
+        display: flex;
+        gap: 16px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        background: var(--gradient-primary);
+        padding: 14px 24px;
+        border-radius: 12px;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 8px 25px rgba(6, 182, 212, 0.3);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(6, 182, 212, 0.4);
+      }
+      .btn::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+      }
+      .btn:hover::before {
+        transform: translateX(100%);
+      }
+      .ghost {
+        background: transparent;
+        border: 2px solid var(--glass-border);
+        color: var(--text);
+        padding: 12px 22px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 600;
+        backdrop-filter: blur(15px);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .ghost:hover {
+        border-color: var(--accent);
+        background: var(--glass-strong);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(6, 182, 212, 0.2);
+        color: var(--text);
+      }
+      @media (max-width: 640px) {
+        .hero {
+          flex-direction: column;
+          align-items: flex-start;
+          text-align: left;
+        }
+        .hero-left h2 {
+          font-size: 24px;
+        }
+        .cta {
+          width: 100%;
+        }
+        .btn, .ghost {
+          flex: 1;
+          text-align: center;
+        }
+      }
+
+      /* timeline */
+      .timeline-wrap {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 16px 0;
+      }
+      .timeline {
+        position: relative;
+        padding-left: 80px;
+        margin: 0;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 30px;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: var(--gradient-primary);
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+      }
+      .tl-item {
+        position: relative;
+        padding: 28px 32px;
+        margin-bottom: 24px;
+        border-radius: 20px;
+        background: var(--timeline-bg);
+        backdrop-filter: blur(20px);
+        border: 2px solid var(--timeline-border);
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      .tl-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--gradient-primary);
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+      }
+      .tl-item:hover {
+        transform: translateY(-12px) translateX(12px);
+        box-shadow: 0 25px 50px rgba(6, 182, 212, 0.25);
+        border-color: var(--accent);
+        background: var(--card-hover);
+      }
+      .tl-item:hover::before {
+        opacity: 1;
+      }
+      .tl-item:last-child {
+        margin-bottom: 0;
+      }
+      .tl-node {
+        position: absolute;
+        left: -50px;
+        top: 32px;
+        height: 28px;
+        width: 28px;
+        border-radius: 50%;
+        background: var(--gradient-primary);
+        box-shadow: 0 0 25px rgba(6, 182, 212, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: #ffffff;
+        font-weight: 700;
+        z-index: 3;
+        border: 3px solid var(--card);
+      }
+      .tl-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        margin-bottom: 8px;
+      }
+      .tl-title {
+        font-weight: 700;
+        font-size: 20px;
+        color: var(--text);
+        margin-bottom: 6px;
+        line-height: 1.3;
+      }
+      .tl-sub {
+        color: var(--muted);
+        font-size: 15px;
+        margin-top: 8px;
+        font-weight: 500;
+        opacity: 0.9;
+      }
+      .tl-desc {
+        margin-top: 20px;
+        color: var(--text-secondary);
+        opacity: 0.95;
+        font-size: 15px;
+        line-height: 1.7;
+        display: none;
+        padding-top: 20px;
+        border-top: 2px solid var(--glass-border);
+      }
+      .tl-item.expanded .tl-desc {
+        display: block;
+        animation: fadeInUp 0.4s ease;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 0.9;
+          transform: translateY(0);
+        }
+      }
+
+      /* Timeline mobile responsiveness */
+      @media (max-width: 768px) {
+        .timeline {
+          padding-left: 60px;
+        }
+        .timeline::before {
+          left: 25px;
+        }
+        .tl-node {
+          left: -40px;
+          height: 24px;
+          width: 24px;
+          border: 2px solid var(--card);
+          font-size: 11px;
+        }
+        .tl-item {
+          padding: 24px 20px;
+          margin-bottom: 20px;
+        }
+        .tl-title {
+          font-size: 18px;
+        }
+        .tl-head {
+          flex-direction: column;
+          gap: 8px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .timeline-wrap {
+          gap: 24px;
+          padding: 8px 0;
+        }
+        .timeline {
+          padding-left: 50px;
+        }
+        .timeline::before {
+          left: 20px;
+          width: 3px;
+        }
+        .tl-node {
+          left: -30px;
+          height: 20px;
+          width: 20px;
+          top: 28px;
+          font-size: 10px;
+          border: 2px solid var(--card);
+        }
+        .tl-item {
+          padding: 20px 16px;
+          margin-bottom: 16px;
+          border-radius: 16px;
+        }
+        .tl-item:hover {
+          transform: translateY(-6px) translateX(6px);
+        }
+        .tl-title {
+          font-size: 16px;
+        }
+        .tl-sub {
+          font-size: 14px;
+        }
+        .tl-desc {
+          margin-top: 16px;
+          padding-top: 16px;
+          font-size: 14px;
+        }
+      }
+
+      /* projects grid */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+      @media (max-width: 640px) {
+        .grid {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+      }
+
+      .project {
+        padding: 28px;
+        border-radius: 18px;
+        background: var(--timeline-bg);
+        backdrop-filter: blur(25px);
+        border: 2px solid var(--timeline-border);
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        min-height: 140px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: var(--shadow);
+      }
+      .project::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--gradient-primary);
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+      }
+      .project:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 25px 50px rgba(6, 182, 212, 0.25);
+        border-color: var(--accent);
+        background: var(--card-hover);
+      }
+      .project:hover::before {
+        opacity: 1;
+      }
+      .project-title {
+        font-weight: 700;
+        font-size: 16px;
+        color: var(--text);
+        margin-bottom: 8px;
+      }
+      .project-desc {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      .project-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .tech-tag {
+        background: var(--glass-strong);
+        color: var(--accent);
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        border: 1px solid var(--glass);
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: center;
+        margin-top: 20px;
+        color: var(--muted);
+        font-size: 14px;
+        flex-wrap: wrap;
+      }
+      .contact-links a {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 700;
+        transition: color 0.3s ease;
+      }
+      .contact-links a:hover {
+        color: var(--accent-secondary);
+      }
+
+      /* Section titles */
+      h3 {
+        margin: 0 0 20px 0;
+        font-size: 22px;
+        font-weight: 700;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* small helpers */
+      .muted-block {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      .center {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .sr-only {
+        position: absolute;
+        clip: rect(1px, 1px, 1px, 1px);
+        padding: 0;
+        border: 0;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+      }
+
+      /* Animations */
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+      }
+      
+      .avatar {
+        animation: float 6s ease-in-out infinite;
+      }
+
+      /* Loading and scroll effects */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Contact section styling */
+      .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-top: 20px;
+      }
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px;
+        background: var(--glass-strong);
+        border-radius: 12px;
+        border: 1px solid var(--glass);
+        transition: all 0.3s ease;
+      }
+      .contact-item:hover {
+        transform: translateY(-2px);
+        border-color: var(--accent);
+        box-shadow: 0 8px 25px rgba(6, 182, 212, 0.15);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap" id="site">
+      <aside class="sidebar card" aria-labelledby="me">
+        <div class="avatar" aria-hidden="true" id="avatar">BP</div>
+        <div>
+          <h1 id="me">Bhanu Pratap Singh</h1>
+          <div class="muted">Fullstack Developer — Tokyo, Japan</div>
+        </div>
+
+        <p class="bio">
+          Fullstack Developer with 5+ years of experience in designing and delivering scalable web applications, APIs, and AI-driven solutions across automotive and enterprise domains. Skilled in React, Next.js, Node.js, and D3.js for full-cycle development, with strong expertise in Azure and AWS cloud platforms. Proven track record of leading cross-vendor teams, optimizing system performance by up to 66%, and delivering projects on time for global clients. Experienced in building Generative AI applications using Azure OpenAI, Google Gemini, and Python, integrating end-to-end solutions into real-world business use cases.
+        </p>
+
+        <div class="meta">
+          <div class="pill">📧 bhanupratap_1998@outlook.com</div>
+          <div class="pill">📧 bhanupratap@hotmail.com</div>
+          <div class="pill">📱 +81-8090687219</div>
+          <div class="pill">📍 Tokyo, Japan</div>
+          <div class="pill">
+            🔗
+            <a
+              href="https://github.com/bhanuhpratap-singh"
+              target="_blank"
+              style="color: inherit; text-decoration: none"
+              >github.com/bhanuhpratap-singh</a
+            >
+          </div>
+          <div class="pill">
+            💼
+            <a
+              href="https://linkedin.com/in/iambhanu/"
+              target="_blank"
+              style="color: inherit; text-decoration: none"
+              >LinkedIn Profile</a
+            >
+          </div>
+        </div>
+
+        <div class="toggle">
+          <div class="small">Theme</div>
+          <div
+            class="theme-switch"
+            id="themeToggle"
+            role="switch"
+            aria-checked="false"
+            tabindex="0"
+            aria-label="Toggle theme"
+          >
+            <div class="theme-knob" id="themeKnob" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div style="margin-top: 16px">
+          <div class="small">Key skills</div>
+          <div class="skills" id="skills">
+            <!-- skills populated by JS -->
+          </div>
+        </div>
+      </aside>
+
+      <main>
+        <section class="card hero" aria-label="Intro">
+          <div class="hero-left">
+            <h2>Building AI-Driven Solutions & Scalable Applications</h2>
+            <div class="role">
+              Fullstack Developer • AI Integration Specialist • Team Lead • Azure & AWS Expert
+            </div>
+            <div class="cta">
+              <button
+                class="btn"
+                onclick="document.getElementById('timeline').scrollIntoView({behavior:'smooth'})"
+              >
+                Explore My Journey
+              </button>
+              <button
+                class="ghost"
+                onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})"
+              >
+                Let's Connect
+              </button>
+            </div>
+          </div>
+          <div style="text-align: right">
+            <div style="font-size: 14px; color: var(--muted); font-weight: 600">
+              Current Position
+            </div>
+            <div style="font-weight: 700; font-size: 18px; margin-top: 8px; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+              Senior Fullstack Developer
+            </div>
+            <div class="muted" style="margin-top: 6px">Accenture Japan — Remote</div>
+            <div style="font-size: 12px; color: var(--muted); margin-top: 8px">
+              5+ Years Experience • AI & Cloud Expert
+            </div>
+          </div>
+        </section>        <section class="card" id="timeline" aria-labelledby="timelineTitle">
+          <h3 id="timelineTitle">Professional Journey</h3>
+          <div class="muted-block" style="margin-bottom: 16px">
+            My career progression and key achievements — click any entry to expand and see detailed accomplishments
+          </div>
+
+          <div class="timeline-wrap">
+            <div class="timeline" id="tl">
+              <!-- timeline items inserted by JS -->
+            </div>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="projectsTitle">
+          <h3 id="projectsTitle">Featured Projects</h3>
+          <div class="muted-block" style="margin-bottom: 20px">
+            Showcasing innovative solutions and technical excellence across different domains
+          </div>
+          <div class="grid" id="projects">
+            <div class="project">
+              <div class="project-title">🚀 AI-Powered Analytics Dashboard</div>
+              <div class="project-desc">
+                Next.js dashboard with real-time data visualization using D3.js, integrated with Azure OpenAI for intelligent insights and predictive analytics.
+              </div>
+              <div class="project-tech">
+                <span class="tech-tag">Next.js</span>
+                <span class="tech-tag">D3.js</span>
+                <span class="tech-tag">Azure AI</span>
+                <span class="tech-tag">TypeScript</span>
+              </div>
+            </div>
+            <div class="project">
+              <div class="project-title">🤖 Multi-Solution AI Generator</div>
+              <div class="project-desc">
+                Scalable Node.js backend with Python integration, leveraging Google Gemini and Ollama for generating diverse AI solutions with high performance.
+              </div>
+              <div class="project-tech">
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Gemini AI</span>
+                <span class="tech-tag">Docker</span>
+              </div>
+            </div>
+            <div class="project">
+              <div class="project-title">📋 Enterprise Document Portal</div>
+              <div class="project-desc">
+                Full-stack document management system with RBAC, AWS SSO integration, version control, and real-time collaboration features.
+              </div>
+              <div class="project-tech">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">AWS SSO</span>
+                <span class="tech-tag">MongoDB</span>
+                <span class="tech-tag">GraphQL</span>
+              </div>
+            </div>
+            <div class="project">
+              <div class="project-title">🔧 Vehicle Diagnostic Platform</div>
+              <div class="project-desc">
+                Automotive diagnostic portal with real-time vehicle analytics, performance monitoring, and predictive maintenance capabilities.
+              </div>
+              <div class="project-tech">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">MySQL</span>
+                <span class="tech-tag">REST API</span>
+              </div>
+            </div>
+            <div class="project">
+              <div class="project-title">🏗️ Cloud Infrastructure Automation</div>
+              <div class="project-desc">
+                Dockerized microservices architecture with automated CI/CD pipelines, monitoring, and scalable deployment on AWS/Azure.
+              </div>
+              <div class="project-tech">
+                <span class="tech-tag">Docker</span>
+                <span class="tech-tag">AWS</span>
+                <span class="tech-tag">CI/CD</span>
+                <span class="tech-tag">Kubernetes</span>
+              </div>
+            </div>
+            <div class="project">
+              <div class="project-title">🎯 Team Leadership & Mentoring</div>
+              <div class="project-desc">
+                Led 16-member cross-vendor teams, implemented agile methodologies, and mentored junior developers in modern web technologies.
+              </div>
+              <div class="project-tech">
+                <span class="tech-tag">Leadership</span>
+                <span class="tech-tag">Agile</span>
+                <span class="tech-tag">Mentoring</span>
+                <span class="tech-tag">Strategy</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="certificationsTitle">
+          <h3 id="certificationsTitle">Professional Certifications</h3>
+          <div class="muted-block" style="margin-bottom: 20px">
+            Industry-recognized certifications in cloud computing and AI technologies
+          </div>
+          <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+            <div class="project">
+              <div class="project-title">🌩️ Google Professional Cloud Architect</div>
+              <div class="project-desc">
+                Advanced certification demonstrating expertise in designing and managing Google Cloud solutions.
+              </div>
+              <div class="project-tech">
+                <span class="tech-tag">Google Cloud</span>
+                <span class="tech-tag">June 2024</span>
+              </div>
+            </div>
+            <div class="project">
+              <div class="project-title">☁️ Google Associate Cloud Engineer</div>
+              <div class="project-desc">
+                Foundational certification in Google Cloud Platform services and deployment strategies.
+              </div>
+              <div class="project-tech">
+                <span class="tech-tag">GCP</span>
+                <span class="tech-tag">May 2024</span>
+              </div>
+            </div>
+            <div class="project">
+              <div class="project-title">🤖 Microsoft Azure AI Engineer Associate</div>
+              <div class="project-desc">
+                Specialized certification in Azure AI services, machine learning, and cognitive services implementation.
+              </div>
+              <div class="project-tech">
+                <span class="tech-tag">Azure AI</span>
+                <span class="tech-tag">May 2024</span>
+              </div>
+            </div>
+            <div class="project">
+              <div class="project-title">🔷 Microsoft Azure Fundamentals</div>
+              <div class="project-desc">
+                Core certification covering Azure services, security, privacy, compliance, and trust.
+              </div>
+              <div class="project-tech">
+                <span class="tech-tag">Azure</span>
+                <span class="tech-tag">March 2024</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" id="contact" aria-labelledby="contactTitle">
+          <h3 id="contactTitle">Contact</h3>
+          <p class="muted-block">
+            I'm available for remote/full-time roles and contract work. Based in
+            Ghaziabad, Uttar Pradesh, India.
+          </p>
+          <div
+            style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px"
+          >
+            <a class="btn" href="mailto:bhanupratap.singh25@gmail.com"
+              >Send Message</a
+            >
+            <a class="btn" href="mailto:bhanupratap@hotmail.com"
+              >Alternative Email</a
+            >
+            <a
+              class="ghost"
+              href="https://github.com/bhanuhpratap-singh"
+              target="_blank"
+              >View GitHub</a
+            >
+            <a
+              class="ghost"
+              href="https://linkedin.com/in/iambhanu/"
+              target="_blank"
+              >LinkedIn Profile</a
+            >
+          </div>
+          <footer style="margin-top: 16px">
+            <div class="muted">© <span id="year"></span> Bhanu Pratap</div>
+            <div class="contact-links">
+              LinkedIn •
+              <a href="https://linkedin.com/in/iambhanu/" target="_blank"
+                >Profile</a
+              >
+            </div>
+          </footer>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      /* --- Enhanced Resume Data with Exact Details from PDF --- */
+      const resumeTimeline = [
+        {
+          title: "Senior Fullstack Developer",
+          org: "Accenture Japan — Tokyo",
+          date: "June 2025 — Present",
+          desc: `Solely responsible for end-to-end UI development using Next.js and D3.js to build interactive dashboards and visualizations for an internal automotive lifecycle platform. Contributing to backend development of a Generative AI project leveraging Azure OpenAI and Google Gemini models to generate multi-solution workflows across the automotive SDLC. Collaborating with cross-functional team members to design, train, and integrate AI-driven solutions into real-world business use cases. Developing backend services in Python and Ollama while enhancing proficiency in scalable AI/ML integrations. Driving innovation by combining Generative AI, modern frontend frameworks, and cloud services to accelerate solution delivery within the automotive domain.`,
+        },
+        {
+          title: "Team Lead",
+          org: "Accenture Japan — Tokyo",
+          date: "August 2024 — May 2025",
+          desc: `Led a 16-member cross-vendor team, including senior engineers, to design and deliver a Document Management Portal for a major global automotive client. Oversaw end-to-end development using Next.js for frontend, with seamless integration of APIs and storage services to enable document linking, editing, and version comparison. Implemented Role-Based Access Control (RBAC) and integrated AWS SSO to ensure secure and scalable user authentication across the platform. Utilized Docker and modern DevOps practices to containerize and streamline deployments, improving reliability and reducing environment setup time. Coordinated multi-vendor collaboration, managing priorities, risks, and deliverables to ensure on-time project delivery within client expectations. Acted as a bridge between technical teams and client stakeholders, translating business requirements into scalable technical solutions. Fostered an Agile working environment by facilitating sprint planning, reviews, and retrospectives, driving team efficiency and collaboration.`,
+        },
+        {
+          title: "Senior FullStack Engineer",
+          org: "Accenture India — Bangalore",
+          date: "January 2021 — August 2024",
+          desc: `Contributed to the Dealer's Diagnostic Portal for a global client by implementing new features using React (frontend) and Node.js (backend). Designed and implemented UI and backend performance optimization strategies, improving portal loading times by 66% and enhancing user experience. Developed scalable and configurable backend services in Node.js to process and analyze complex real-time diagnostic data. Collaborated with cross-origin and cross-functional teams, ensuring seamless integration and delivery of features across multiple geographies. Successfully handled the project single-handedly during resource constraints, maintaining delivery timelines and client expectations. Received multiple client recognitions for exceptional contribution, ownership, and commitment to project success.`,
+        },
+        {
+          title: "B.E. Mechanical Engineering",
+          org: "Army Institute of Technology, Pune",
+          date: "May 2016 — May 2020",
+          desc: `Served as Robotics Secretary, leading student initiatives in automation, coding, and Arduino-based projects. Represented the institute in Robocon and multiple IIT Techfests, winning awards for innovative robotics and automation solutions. Gained strong foundations in problem-solving, programming, and embedded systems, which fueled a transition into software development. Graduated with strong academic performance while actively participating in technical competitions and leadership roles.`,
+        },
+      ];
+
+      const skills = [
+        "React.js", "Next.js", "Node.js", "D3.js", "JavaScript", "HTML", "SCSS",
+        "Azure Cloud", "AWS", "Docker", "REST API", "GraphQL", 
+        "MySQL", "MongoDB", "Python", "Ollama", "Azure OpenAI", "Google Gemini",
+        "GitHub", "Jira", "Confluence", "Agile", "DevOps", "RBAC", "AWS SSO",
+        "Team Leadership", "Cross-vendor Collaboration", "Performance Optimization"
+      ];
+
+      // insert year
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // populate skills with animation
+      const skillsEl = document.getElementById("skills");
+      skills.forEach((skill, index) => {
+        const el = document.createElement("div");
+        el.className = "skill";
+        el.textContent = skill;
+        el.style.animationDelay = `${index * 0.1}s`;
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        skillsEl.appendChild(el);
+        
+        // Animate in
+        setTimeout(() => {
+          el.style.transition = 'all 0.6s ease';
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        }, index * 100);
+      });
+
+      // build timeline with enhanced animations
+      const tl = document.getElementById("tl");
+      resumeTimeline.forEach((item, idx) => {
+        const div = document.createElement("div");
+        div.className = "tl-item";
+        div.setAttribute("tabindex", "0");
+        div.innerHTML = `
+      <div class="tl-node">${idx + 1}</div>
+      <div class="tl-head">
+        <div>
+          <div class="tl-title">${escapeHtml(item.title)}</div>
+          <div class="tl-sub">${escapeHtml(item.org)} • ${escapeHtml(
+          item.date
+        )}</div>
+        </div>
+        <div class="center small" style="color: var(--accent); font-weight: 600;">
+          ${idx === 0 ? "✨ Current" : idx === 1 ? "🚀 Recent" : ""}
+        </div>
+      </div>
+      <div class="tl-desc">${escapeHtml(item.desc)}</div>
+    `;
+        
+        // Enhanced click / keyboard handlers
+        const toggleExpansion = () => {
+          const wasExpanded = div.classList.contains("expanded");
+          // Close all other items first
+          document.querySelectorAll('.tl-item.expanded').forEach(item => {
+            if (item !== div) item.classList.remove('expanded');
+          });
+          // Toggle current item
+          div.classList.toggle("expanded", !wasExpanded);
+        };
+        
+        div.addEventListener("click", toggleExpansion);
+        div.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            toggleExpansion();
+          }
+        });
+        tl.appendChild(div);
+      });
+
+      // theme handling
+      const htmlRoot = document.documentElement;
+      const site = document.getElementById("site");
+
+      // prefer saved, otherwise system
+      const saved = localStorage.getItem("themeMode");
+      const prefersLight =
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: light)").matches;
+      if (saved === "light" || (!saved && prefersLight))
+        document.body.classList.add("light");
+
+      // set aria state and knob position visually handled by CSS via .light on body
+      const themeToggle = document.getElementById("themeToggle");
+      themeToggle.addEventListener("click", toggleTheme);
+      themeToggle.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggleTheme();
+        }
+      });
+
+      function toggleTheme() {
+        const isLight = document.body.classList.toggle("light");
+        localStorage.setItem("themeMode", isLight ? "light" : "dark");
+        themeToggle.setAttribute("aria-checked", isLight ? "true" : "false");
+      }
+
+      // small helper: escape text
+      function escapeHtml(str) {
+        return (str || "").replace(/[&<>"']/g, function (m) {
+          return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;",
+          }[m];
+        });
+      }
+
+      // keyboard: pressing "t" toggles theme quickly
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "t" && !e.ctrlKey && !e.metaKey) toggleTheme();
+      });
+
+      // tiny accessibility enhancement: focus outline for keyboard users only
+      (function () {
+        let mouseMode = false;
+        document.body.addEventListener("mousedown", () => (mouseMode = true));
+        document.body.addEventListener("keydown", () => (mouseMode = false));
+        document.addEventListener(
+          "focusin",
+          (e) => {
+            if (!mouseMode && e.target)
+              e.target.style.outline = "3px solid rgba(125,211,252,0.16)";
+          },
+          true
+        );
+        document.addEventListener(
+          "focusout",
+          (e) => {
+            if (e.target) e.target.style.outline = "";
+          },
+          true
+        );
+      })();
+
+      /* Enhanced Timeline Animation with Staggered Effects */
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+              const delay = Array.from(entry.target.parentNode.children).indexOf(entry.target) * 150;
+              setTimeout(() => {
+                entry.target.style.transform = "translateY(0) translateX(0)";
+                entry.target.style.opacity = "1";
+              }, delay);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+      );
+      
+      document.querySelectorAll(".tl-item").forEach((el, i) => {
+        el.style.transform = "translateY(30px) translateX(-20px)";
+        el.style.opacity = "0";
+        el.style.transition = "all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1)";
+        observer.observe(el);
+      });
+
+      // Enhanced Card Hover Effects
+      document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          card.style.transform = 'translateY(-8px)';
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'translateY(0)';
+        });
+      });
+
+      // Project Cards Interactive Effects
+      document.querySelectorAll('.project').forEach(project => {
+        project.addEventListener('mouseenter', () => {
+          project.querySelector('.project-title').style.color = 'var(--accent)';
+        });
+        project.addEventListener('mouseleave', () => {
+          project.querySelector('.project-title').style.color = 'var(--text)';
+        });
+      });
+
+      // Smooth scroll with offset for sticky header
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+
+      // Add loading animation
+      window.addEventListener('load', () => {
+        document.body.style.opacity = '0';
+        document.body.style.transform = 'translateY(20px)';
+        document.body.style.transition = 'all 0.8s ease';
+        
+        setTimeout(() => {
+          document.body.style.opacity = '1';
+          document.body.style.transform = 'translateY(0)';
+        }, 100);
+      });
+
+      // Function to update avatar with base64 image
+      function updateAvatar(base64String) {
+        const avatar = document.getElementById('avatar');
+        avatar.innerHTML = `<img src="${base64String}" alt="Bhanu Pratap Singh - Professional Photo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;" onerror="this.parentElement.innerHTML='BP';" />`;
+      }
+
+      // Uncomment and add your base64 string here when ready:
+      // updateAvatar('data:image/jpeg;base64,YOUR_BASE64_STRING_HERE');
+    </script>
+  </body>
+</html>
