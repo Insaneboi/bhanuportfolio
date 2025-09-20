@@ -21,7 +21,8 @@
       }
       html,
       body {
-        height: 100%;
+        height: auto;
+        min-height: 100%;
       }
       body {
         margin: 0;
@@ -36,9 +37,9 @@
         --card: #1e293b;
         --card-hover: #334155;
         --muted: #94a3b8;
-        --accent: #06b6d4;
-        --accent-secondary: #3b82f6;
-        --accent-tertiary: #8b5cf6;
+        --accent: #10b981;
+        --accent-secondary: #059669;
+        --accent-tertiary: #34d399;
         --text: #f1f5f9;
         --text-secondary: #e2e8f0;
         --glass: rgba(255, 255, 255, 0.08);
@@ -46,12 +47,17 @@
         --glass-border: rgba(255, 255, 255, 0.15);
         --radius: 20px;
         --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-        --shadow-glow: 0 0 40px rgba(6, 182, 212, 0.15);
+        --shadow-glow: 0 0 40px rgba(16, 185, 129, 0.15);
         --max-width: 1200px;
         --gap: 24px;
-        --gradient-primary: linear-gradient(135deg, #06b6d4, #3b82f6, #8b5cf6);
+        --gradient-primary: linear-gradient(135deg, #10b981, #059669, #34d399);
         --gradient-card: #1e293b;
-        --border-glow: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.3), transparent);
+        --border-glow: linear-gradient(
+          90deg,
+          transparent,
+          rgba(16, 185, 129, 0.3),
+          transparent
+        );
         --timeline-bg: #1e293b;
         --timeline-border: rgba(255, 255, 255, 0.1);
       }
@@ -61,19 +67,24 @@
         --card: #f8fafc;
         --card-hover: #e2e8f0;
         --muted: #475569;
-        --accent: #0ea5e9;
-        --accent-secondary: #3b82f6;
-        --accent-tertiary: #8b5cf6;
+        --accent: #10b981;
+        --accent-secondary: #059669;
+        --accent-tertiary: #34d399;
         --text: #0f172a;
         --text-secondary: #1e293b;
         --glass: rgba(15, 23, 42, 0.08);
         --glass-strong: rgba(15, 23, 42, 0.12);
         --glass-border: rgba(15, 23, 42, 0.15);
         --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-        --shadow-glow: 0 0 40px rgba(14, 165, 233, 0.1);
-        --gradient-primary: linear-gradient(135deg, #0ea5e9, #3b82f6, #8b5cf6);
+        --shadow-glow: 0 0 40px rgba(16, 185, 129, 0.1);
+        --gradient-primary: linear-gradient(135deg, #10b981, #059669, #34d399);
         --gradient-card: #f8fafc;
-        --border-glow: linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.2), transparent);
+        --border-glow: linear-gradient(
+          90deg,
+          transparent,
+          rgba(16, 185, 129, 0.2),
+          transparent
+        );
         --timeline-bg: #f8fafc;
         --timeline-border: rgba(15, 23, 42, 0.1);
       }
@@ -81,15 +92,78 @@
       body {
         background: var(--bg);
         color: var(--text);
-        padding: 32px;
-        display: flex;
-        justify-content: center;
+        padding: 0;
+        margin: 0;
         min-height: 100vh;
         position: relative;
       }
 
+      /* Page Container */
+      .page-container {
+        min-height: 100vh;
+        display: block;
+      }
+
+      /* Header Styles */
+      .main-header {
+        background: var(--card);
+        backdrop-filter: blur(25px);
+        border-bottom: 2px solid var(--glass-border);
+        padding: 20px 32px;
+        position: sticky;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        box-shadow: var(--shadow);
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .header-content {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+      .header-title {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 700;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .header-subtitle {
+        color: var(--muted);
+        font-size: 14px;
+        margin-top: 4px;
+        font-weight: 500;
+      }
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      /* Main content wrapper */
+      .main-content {
+        padding: 32px;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      /* Scroll padding to account for sticky header */
+      html {
+        scroll-padding-top: 120px;
+      }
+
       body::before {
-        content: '';
+        content: "";
         position: fixed;
         top: 0;
         left: 0;
@@ -115,16 +189,36 @@
           max-width: 800px;
           gap: calc(var(--gap) * 1.5);
         }
-        body {
+        .main-content {
           padding: 20px;
+        }
+        .main-header {
+          padding: 16px 20px;
+        }
+        .header-content {
+          flex-direction: column;
+          gap: 16px;
+          text-align: center;
+        }
+        .header-title {
+          font-size: 20px;
+        }
+        .header-subtitle {
+          font-size: 13px;
         }
       }
       @media (max-width: 640px) {
-        body {
+        .main-content {
           padding: 16px;
         }
         .wrap {
           gap: 20px;
+        }
+        .main-header {
+          padding: 12px 16px;
+        }
+        .header-title {
+          font-size: 18px;
         }
       }
 
@@ -137,11 +231,11 @@
         padding: 32px;
         box-shadow: var(--shadow), var(--shadow-glow);
         position: sticky;
-        top: 32px;
+        top: 0;
         overflow: hidden;
       }
       .sidebar::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
@@ -154,15 +248,15 @@
         width: 100px;
         height: 100px;
         border-radius: 20px;
-        background: var(--gradient-primary);
-        display: flex;
+        background: transparent;
+        display: none;
         align-items: center;
         justify-content: center;
         font-weight: 800;
         font-size: 32px;
         color: #ffffff;
-        margin-bottom: 20px;
-        box-shadow: 0 8px 32px rgba(6, 182, 212, 0.3);
+        margin-bottom: 0;
+        box-shadow: none;
         position: relative;
         overflow: hidden;
       }
@@ -171,15 +265,6 @@
         height: 100%;
         object-fit: cover;
         border-radius: 20px;
-      }
-      .avatar::before {
-        content: '';
-        position: absolute;
-        inset: -2px;
-        background: var(--gradient-primary);
-        border-radius: 22px;
-        z-index: -1;
-        opacity: 0.8;
       }
       h1 {
         margin: 0;
@@ -231,10 +316,10 @@
         transform: translateY(-2px);
         background: var(--glass-strong);
         border-color: var(--accent);
-        box-shadow: 0 8px 25px rgba(6, 182, 212, 0.15);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15);
       }
       .pill::before {
-        content: '';
+        content: "";
         position: absolute;
         inset: 0;
         background: var(--border-glow);
@@ -268,20 +353,20 @@
       }
       .theme-switch:hover {
         border-color: var(--accent);
-        box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
       }
       .theme-knob {
         height: 32px;
         width: 32px;
         border-radius: 50%;
         background: var(--gradient-primary);
-        box-shadow: 0 4px 12px rgba(6, 182, 212, 0.4);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
         transform: translateX(0);
         transition: transform 0.3s ease;
         position: relative;
       }
       .theme-knob::before {
-        content: '🌙';
+        content: "🌙";
         position: absolute;
         inset: 0;
         display: flex;
@@ -291,7 +376,7 @@
         transition: opacity 0.3s ease;
       }
       .light .theme-knob::before {
-        content: '☀️';
+        content: "☀️";
       }
       .light .theme-knob {
         transform: translateX(36px);
@@ -325,7 +410,7 @@
         transform: translateY(-2px) scale(1.05);
         background: var(--accent);
         color: #ffffff;
-        box-shadow: 0 8px 25px rgba(6, 182, 212, 0.3);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
       }
 
       /* main content */
@@ -347,7 +432,7 @@
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       }
       .card::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
@@ -358,7 +443,7 @@
       }
       .card:hover {
         transform: translateY(-8px);
-        box-shadow: var(--shadow), 0 0 80px rgba(6, 182, 212, 0.25);
+        box-shadow: var(--shadow), 0 0 80px rgba(16, 185, 129, 0.25);
         border-color: var(--accent);
         background: var(--card-hover);
       }
@@ -367,8 +452,13 @@
         display: flex;
         justify-content: space-between;
         gap: 24px;
-        align-items: center;
-        flex-wrap: wrap;
+        align-items: flex-start;
+        flex-wrap: nowrap;
+      }
+      .hero-right {
+        flex-shrink: 0;
+        text-align: right;
+        margin-left: auto;
       }
       .hero-left h2 {
         margin: 0;
@@ -402,20 +492,25 @@
         font-size: 14px;
         border: none;
         cursor: pointer;
-        box-shadow: 0 8px 25px rgba(6, 182, 212, 0.3);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
         transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
       }
       .btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 12px 35px rgba(6, 182, 212, 0.4);
+        box-shadow: 0 12px 35px rgba(16, 185, 129, 0.4);
       }
       .btn::before {
-        content: '';
+        content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        background: linear-gradient(
+          45deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent
+        );
         transform: translateX(-100%);
         transition: transform 0.6s ease;
       }
@@ -439,23 +534,37 @@
         border-color: var(--accent);
         background: var(--glass-strong);
         transform: translateY(-2px);
-        box-shadow: 0 12px 30px rgba(6, 182, 212, 0.2);
+        box-shadow: 0 12px 30px rgba(16, 185, 129, 0.2);
         color: var(--text);
       }
       @media (max-width: 640px) {
         .hero {
-          flex-direction: column;
+          flex-direction: row;
           align-items: flex-start;
           text-align: left;
+          flex-wrap: nowrap;
+        }
+        .hero-right {
+          text-align: right;
+          align-self: flex-start;
+          margin-left: auto;
+          flex-shrink: 0;
+          min-width: 200px;
+        }
+        .hero-left {
+          flex: 1;
+          max-width: calc(100% - 220px);
         }
         .hero-left h2 {
-          font-size: 24px;
+          font-size: 20px;
         }
         .cta {
           width: 100%;
+          flex-direction: column;
         }
-        .btn, .ghost {
-          flex: 1;
+        .btn,
+        .ghost {
+          width: 100%;
           text-align: center;
         }
       }
@@ -481,7 +590,7 @@
         width: 4px;
         background: var(--gradient-primary);
         border-radius: 8px;
-        box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
       }
       .tl-item {
         position: relative;
@@ -497,7 +606,7 @@
         box-shadow: var(--shadow);
       }
       .tl-item::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
@@ -509,7 +618,7 @@
       }
       .tl-item:hover {
         transform: translateY(-12px) translateX(12px);
-        box-shadow: 0 25px 50px rgba(6, 182, 212, 0.25);
+        box-shadow: 0 25px 50px rgba(16, 185, 129, 0.25);
         border-color: var(--accent);
         background: var(--card-hover);
       }
@@ -527,7 +636,7 @@
         width: 28px;
         border-radius: 50%;
         background: var(--gradient-primary);
-        box-shadow: 0 0 25px rgba(6, 182, 212, 0.6);
+        box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -544,6 +653,43 @@
         align-items: flex-start;
         flex-wrap: wrap;
         margin-bottom: 8px;
+        position: relative;
+      }
+      .tl-expand-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: var(--glass-strong);
+        border: 1px solid var(--glass);
+        border-radius: 8px;
+        padding: 8px 12px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--accent);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        backdrop-filter: blur(10px);
+      }
+      .tl-expand-btn:hover {
+        background: var(--accent);
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      }
+      .tl-expand-icon {
+        transition: transform 0.3s ease;
+        font-size: 10px;
+      }
+      .tl-item.expanded .tl-expand-icon {
+        transform: rotate(180deg);
+      }
+      .tl-item.expanded .tl-expand-btn {
+        background: var(--accent);
+        color: #ffffff;
+        border-color: var(--accent);
       }
       .tl-title {
         font-weight: 700;
@@ -610,6 +756,11 @@
           flex-direction: column;
           gap: 8px;
         }
+        .tl-expand-btn {
+          position: relative;
+          align-self: flex-start;
+          margin-top: 8px;
+        }
       }
 
       @media (max-width: 480px) {
@@ -651,6 +802,10 @@
           padding-top: 16px;
           font-size: 14px;
         }
+        .tl-expand-btn {
+          font-size: 11px;
+          padding: 6px 10px;
+        }
       }
 
       /* projects grid */
@@ -683,7 +838,7 @@
         box-shadow: var(--shadow);
       }
       .project::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
@@ -695,7 +850,7 @@
       }
       .project:hover {
         transform: translateY(-12px);
-        box-shadow: 0 25px 50px rgba(6, 182, 212, 0.25);
+        box-shadow: 0 25px 50px rgba(16, 185, 129, 0.25);
         border-color: var(--accent);
         background: var(--card-hover);
       }
@@ -783,12 +938,158 @@
 
       /* Animations */
       @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
       }
-      
+
       .avatar {
         animation: float 6s ease-in-out infinite;
+      }
+
+      /* Welcome Animation Styles */
+      .welcome-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--bg);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+      }
+
+      .welcome-content {
+        text-align: center;
+        transform: translateY(20px);
+        opacity: 0;
+        animation: welcomeSlideUp 0.6s ease forwards;
+      }
+
+      .welcome-title {
+        font-size: 48px;
+        font-weight: 800;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 16px;
+        animation: welcomeGlow 1.5s ease-in-out infinite alternate;
+      }
+
+      .welcome-subtitle {
+        font-size: 20px;
+        color: var(--muted);
+        margin-bottom: 32px;
+        font-weight: 500;
+      }
+
+      .welcome-loader {
+        width: 60px;
+        height: 60px;
+        border: 3px solid var(--glass-border);
+        border-top: 3px solid var(--accent);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin: 0 auto;
+      }
+
+      @keyframes welcomeSlideUp {
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes welcomeGlow {
+        from {
+          filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.3));
+        }
+        to {
+          filter: drop-shadow(0 0 30px rgba(16, 185, 129, 0.6));
+        }
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Initial hidden state for page content */
+      .page-container {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .page-container.loaded {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Staggered animation for main sections */
+      .animate-section {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .animate-section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Main cards slide animations */
+      .animate-section.slide-left {
+        opacity: 0;
+        transform: translateX(-100px) translateY(30px);
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .animate-section.slide-right {
+        opacity: 0;
+        transform: translateX(100px) translateY(30px);
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .animate-section.slide-left.visible,
+      .animate-section.slide-right.visible {
+        opacity: 1;
+        transform: translateX(0) translateY(0);
+      }
+
+      /* Project cards scroll animation - alternating left/right */
+      .project {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .project.slide-left {
+        transform: translateX(-60px) translateY(30px);
+      }
+
+      .project.slide-right {
+        transform: translateX(60px) translateY(30px);
+      }
+
+      /* Timeline items scroll animation */
+      .tl-item {
+        opacity: 0;
+        transform: translateY(30px) translateX(-40px);
+        transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
       }
 
       /* Loading and scroll effects */
@@ -822,286 +1123,584 @@
       .contact-item:hover {
         transform: translateY(-2px);
         border-color: var(--accent);
-        box-shadow: 0 8px 25px rgba(6, 182, 212, 0.15);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15);
+      }
+
+      /* Sidebar contact buttons */
+      .sidebar .btn,
+      .sidebar .ghost {
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0;
+      }
+
+      /* Mobile improvements for sidebar */
+      @media (max-width: 1024px) {
+        .sidebar {
+          position: relative;
+          top: 0;
+        }
+      }
+
+      /* Floating Resume Download Button */
+      .floating-resume-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: var(--gradient-primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        color: #ffffff;
+        text-decoration: none;
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1000;
+        cursor: pointer;
+        border: 3px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+      }
+
+      .floating-resume-btn:hover {
+        transform: translateY(-8px) scale(1.1);
+        box-shadow: 0 15px 40px rgba(16, 185, 129, 0.6);
+        background: linear-gradient(135deg, #34d399, #10b981);
+      }
+
+      .floating-resume-btn:active {
+        transform: translateY(-4px) scale(1.05);
+      }
+
+      /* Tooltip for the floating button */
+      .floating-resume-btn::before {
+        content: "View Resume";
+        position: absolute;
+        right: 70px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: var(--card);
+        color: var(--text);
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid var(--glass-border);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .floating-resume-btn:hover::before {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(-50%) translateX(-8px);
+      }
+
+      /* Mobile responsive adjustments */
+      @media (max-width: 768px) {
+        .floating-resume-btn {
+          bottom: 20px;
+          right: 20px;
+          width: 50px;
+          height: 50px;
+          font-size: 20px;
+        }
+
+        .floating-resume-btn::before {
+          right: 60px;
+          font-size: 11px;
+          padding: 6px 10px;
+        }
+      }
+
+      /* Pulse animation for attention */
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+        50% {
+          box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6),
+            0 0 0 10px rgba(16, 185, 129, 0.1);
+        }
+        100% {
+          box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+      }
+
+      .floating-resume-btn.pulse {
+        animation: pulse 2s infinite;
       }
     </style>
   </head>
   <body>
-    <div class="wrap" id="site">
-      <aside class="sidebar card" aria-labelledby="me">
-        <div class="avatar" aria-hidden="true" id="avatar">BP</div>
-        <div>
-          <h1 id="me">Bhanu Pratap Singh</h1>
-          <div class="muted">Fullstack Developer — Tokyo, Japan</div>
-        </div>
+    <!-- Welcome Animation Overlay -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+      <div class="welcome-content">
+        <div class="welcome-title">Welcome</div>
+        <div class="welcome-subtitle">Loading Portfolio...</div>
+        <div class="welcome-loader"></div>
+      </div>
+    </div>
 
-        <p class="bio">
-          Fullstack Developer with 5+ years of experience in designing and delivering scalable web applications, APIs, and AI-driven solutions across automotive and enterprise domains. Skilled in React, Next.js, Node.js, and D3.js for full-cycle development, with strong expertise in Azure and AWS cloud platforms. Proven track record of leading cross-vendor teams, optimizing system performance by up to 66%, and delivering projects on time for global clients. Experienced in building Generative AI applications using Azure OpenAI, Google Gemini, and Python, integrating end-to-end solutions into real-world business use cases.
-        </p>
-
-        <div class="meta">
-          <div class="pill">📧 bhanupratap_1998@outlook.com</div>
-          <div class="pill">📧 bhanupratap@hotmail.com</div>
-          <div class="pill">📱 +81-8090687219</div>
-          <div class="pill">📍 Tokyo, Japan</div>
-          <div class="pill">
-            🔗
-            <a
-              href="https://github.com/bhanuhpratap-singh"
-              target="_blank"
-              style="color: inherit; text-decoration: none"
-              >github.com/bhanuhpratap-singh</a
+    <div class="page-container" id="pageContainer">
+      <header class="main-header animate-section">
+        <div class="header-content">
+          <div class="header-left">
+            <div style="display: flex; align-items: center; gap: 12px">
+              <img
+                src="linkedin.jpeg"
+                alt="Bhanu Pratap Singh"
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 50%;
+                  border: 2px solid var(--accent);
+                  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+                  object-fit: cover;
+                "
+              />
+              <div>
+                <h1 class="header-title">Bhanu Pratap Singh</h1>
+                <div class="header-subtitle">
+                  Fullstack Developer • Gen AI • Team Lead
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                margin-top: 8px;
+                display: flex;
+                gap: 16px;
+                align-items: center;
+                font-size: 12px;
+                color: var(--muted);
+              "
             >
-          </div>
-          <div class="pill">
-            💼
-            <a
-              href="https://linkedin.com/in/iambhanu/"
-              target="_blank"
-              style="color: inherit; text-decoration: none"
-              >LinkedIn Profile</a
-            >
-          </div>
-        </div>
-
-        <div class="toggle">
-          <div class="small">Theme</div>
-          <div
-            class="theme-switch"
-            id="themeToggle"
-            role="switch"
-            aria-checked="false"
-            tabindex="0"
-            aria-label="Toggle theme"
-          >
-            <div class="theme-knob" id="themeKnob" aria-hidden="true"></div>
-          </div>
-        </div>
-
-        <div style="margin-top: 16px">
-          <div class="small">Key skills</div>
-          <div class="skills" id="skills">
-            <!-- skills populated by JS -->
-          </div>
-        </div>
-      </aside>
-
-      <main>
-        <section class="card hero" aria-label="Intro">
-          <div class="hero-left">
-            <h2>Building AI-Driven Solutions & Scalable Applications</h2>
-            <div class="role">
-              Fullstack Developer • AI Integration Specialist • Team Lead • Azure & AWS Expert
-            </div>
-            <div class="cta">
-              <button
-                class="btn"
-                onclick="document.getElementById('timeline').scrollIntoView({behavior:'smooth'})"
-              >
-                Explore My Journey
-              </button>
-              <button
-                class="ghost"
-                onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})"
-              >
-                Let's Connect
-              </button>
-            </div>
-          </div>
-          <div style="text-align: right">
-            <div style="font-size: 14px; color: var(--muted); font-weight: 600">
-              Current Position
-            </div>
-            <div style="font-weight: 700; font-size: 18px; margin-top: 8px; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-              Senior Fullstack Developer
-            </div>
-            <div class="muted" style="margin-top: 6px">Accenture Japan — Remote</div>
-            <div style="font-size: 12px; color: var(--muted); margin-top: 8px">
-              5+ Years Experience • AI & Cloud Expert
-            </div>
-          </div>
-        </section>        <section class="card" id="timeline" aria-labelledby="timelineTitle">
-          <h3 id="timelineTitle">Professional Journey</h3>
-          <div class="muted-block" style="margin-bottom: 16px">
-            My career progression and key achievements — click any entry to expand and see detailed accomplishments
-          </div>
-
-          <div class="timeline-wrap">
-            <div class="timeline" id="tl">
-              <!-- timeline items inserted by JS -->
-            </div>
-          </div>
-        </section>
-
-        <section class="card" aria-labelledby="projectsTitle">
-          <h3 id="projectsTitle">Featured Projects</h3>
-          <div class="muted-block" style="margin-bottom: 20px">
-            Showcasing innovative solutions and technical excellence across different domains
-          </div>
-          <div class="grid" id="projects">
-            <div class="project">
-              <div class="project-title">🚀 AI-Powered Analytics Dashboard</div>
-              <div class="project-desc">
-                Next.js dashboard with real-time data visualization using D3.js, integrated with Azure OpenAI for intelligent insights and predictive analytics.
-              </div>
-              <div class="project-tech">
-                <span class="tech-tag">Next.js</span>
-                <span class="tech-tag">D3.js</span>
-                <span class="tech-tag">Azure AI</span>
-                <span class="tech-tag">TypeScript</span>
-              </div>
-            </div>
-            <div class="project">
-              <div class="project-title">🤖 Multi-Solution AI Generator</div>
-              <div class="project-desc">
-                Scalable Node.js backend with Python integration, leveraging Google Gemini and Ollama for generating diverse AI solutions with high performance.
-              </div>
-              <div class="project-tech">
-                <span class="tech-tag">Node.js</span>
-                <span class="tech-tag">Python</span>
-                <span class="tech-tag">Gemini AI</span>
-                <span class="tech-tag">Docker</span>
-              </div>
-            </div>
-            <div class="project">
-              <div class="project-title">📋 Enterprise Document Portal</div>
-              <div class="project-desc">
-                Full-stack document management system with RBAC, AWS SSO integration, version control, and real-time collaboration features.
-              </div>
-              <div class="project-tech">
-                <span class="tech-tag">React</span>
-                <span class="tech-tag">AWS SSO</span>
-                <span class="tech-tag">MongoDB</span>
-                <span class="tech-tag">GraphQL</span>
-              </div>
-            </div>
-            <div class="project">
-              <div class="project-title">🔧 Vehicle Diagnostic Platform</div>
-              <div class="project-desc">
-                Automotive diagnostic portal with real-time vehicle analytics, performance monitoring, and predictive maintenance capabilities.
-              </div>
-              <div class="project-tech">
-                <span class="tech-tag">React</span>
-                <span class="tech-tag">Node.js</span>
-                <span class="tech-tag">MySQL</span>
-                <span class="tech-tag">REST API</span>
-              </div>
-            </div>
-            <div class="project">
-              <div class="project-title">🏗️ Cloud Infrastructure Automation</div>
-              <div class="project-desc">
-                Dockerized microservices architecture with automated CI/CD pipelines, monitoring, and scalable deployment on AWS/Azure.
-              </div>
-              <div class="project-tech">
-                <span class="tech-tag">Docker</span>
-                <span class="tech-tag">AWS</span>
-                <span class="tech-tag">CI/CD</span>
-                <span class="tech-tag">Kubernetes</span>
-              </div>
-            </div>
-            <div class="project">
-              <div class="project-title">🎯 Team Leadership & Mentoring</div>
-              <div class="project-desc">
-                Led 16-member cross-vendor teams, implemented agile methodologies, and mentored junior developers in modern web technologies.
-              </div>
-              <div class="project-tech">
-                <span class="tech-tag">Leadership</span>
-                <span class="tech-tag">Agile</span>
-                <span class="tech-tag">Mentoring</span>
-                <span class="tech-tag">Strategy</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="card" aria-labelledby="certificationsTitle">
-          <h3 id="certificationsTitle">Professional Certifications</h3>
-          <div class="muted-block" style="margin-bottom: 20px">
-            Industry-recognized certifications in cloud computing and AI technologies
-          </div>
-          <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
-            <div class="project">
-              <div class="project-title">🌩️ Google Professional Cloud Architect</div>
-              <div class="project-desc">
-                Advanced certification demonstrating expertise in designing and managing Google Cloud solutions.
-              </div>
-              <div class="project-tech">
-                <span class="tech-tag">Google Cloud</span>
-                <span class="tech-tag">June 2024</span>
-              </div>
-            </div>
-            <div class="project">
-              <div class="project-title">☁️ Google Associate Cloud Engineer</div>
-              <div class="project-desc">
-                Foundational certification in Google Cloud Platform services and deployment strategies.
-              </div>
-              <div class="project-tech">
-                <span class="tech-tag">GCP</span>
-                <span class="tech-tag">May 2024</span>
-              </div>
-            </div>
-            <div class="project">
-              <div class="project-title">🤖 Microsoft Azure AI Engineer Associate</div>
-              <div class="project-desc">
-                Specialized certification in Azure AI services, machine learning, and cognitive services implementation.
-              </div>
-              <div class="project-tech">
-                <span class="tech-tag">Azure AI</span>
-                <span class="tech-tag">May 2024</span>
-              </div>
-            </div>
-            <div class="project">
-              <div class="project-title">🔷 Microsoft Azure Fundamentals</div>
-              <div class="project-desc">
-                Core certification covering Azure services, security, privacy, compliance, and trust.
-              </div>
-              <div class="project-tech">
-                <span class="tech-tag">Azure</span>
-                <span class="tech-tag">March 2024</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="card" id="contact" aria-labelledby="contactTitle">
-          <h3 id="contactTitle">Contact</h3>
-          <p class="muted-block">
-            I'm available for remote/full-time roles and contract work. Based in
-            Ghaziabad, Uttar Pradesh, India.
-          </p>
-          <div
-            style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px"
-          >
-            <a class="btn" href="mailto:bhanupratap.singh25@gmail.com"
-              >Send Message</a
-            >
-            <a class="btn" href="mailto:bhanupratap@hotmail.com"
-              >Alternative Email</a
-            >
-            <a
-              class="ghost"
-              href="https://github.com/bhanuhpratap-singh"
-              target="_blank"
-              >View GitHub</a
-            >
-            <a
-              class="ghost"
-              href="https://linkedin.com/in/iambhanu/"
-              target="_blank"
-              >LinkedIn Profile</a
-            >
-          </div>
-          <footer style="margin-top: 16px">
-            <div class="muted">© <span id="year"></span> Bhanu Pratap</div>
-            <div class="contact-links">
-              LinkedIn •
-              <a href="https://linkedin.com/in/iambhanu/" target="_blank"
-                >Profile</a
+              <span>bhanupratap_1998@outlook.com</span>
+              <span>📱 +81-8090687219</span>
+              <span>📍 Tokyo, Japan</span>
+              <a
+                href="Bhanu-Resume.pdf"
+                target="_blank"
+                style="
+                  color: var(--accent);
+                  text-decoration: none;
+                  font-weight: 600;
+                "
+                >📄 Resume</a
               >
             </div>
-          </footer>
-        </section>
-      </main>
+          </div>
+          <div class="header-right">
+            <div class="toggle">
+              <div class="small">Theme</div>
+              <div
+                class="theme-switch"
+                id="themeToggle"
+                role="switch"
+                aria-checked="false"
+                tabindex="0"
+                aria-label="Toggle theme"
+              >
+                <div class="theme-knob" id="themeKnob" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="main-content">
+        <div class="wrap" id="site">
+          <aside class="sidebar card animate-section" aria-labelledby="me">
+            <div class="avatar" aria-hidden="true" id="avatar"></div>
+            <div>
+              <h1 id="me">Bhanu Pratap Singh</h1>
+              <div class="muted">Fullstack Developer — Tokyo, Japan</div>
+            </div>
+
+            <p class="bio">
+              Fullstack Developer with 5+ years of experience in designing and
+              delivering scalable web applications, APIs, and AI-driven
+              solutions across automotive and enterprise domains. Skilled in
+              React, Next.js, Node.js, and D3.js for full-cycle development,
+              with strong expertise in Azure and AWS cloud platforms. Proven
+              track record of leading cross-vendor teams, optimizing system
+              performance by up to 66%, and delivering projects on time for
+              global clients. Experienced in building Generative AI applications
+              using Azure OpenAI, Google Gemini, and Python, integrating
+              end-to-end solutions into real-world business use cases.
+            </p>
+
+            <div class="meta"></div>
+
+            <div style="margin-top: 16px">
+              <div class="small">Key skills</div>
+              <div class="skills" id="skills">
+                <!-- skills populated by JS -->
+              </div>
+            </div>
+
+            <div style="margin-top: 32px" id="contact">
+              <div class="small">Contact Me</div>
+
+              <!-- Contact Details -->
+              <div
+                style="
+                  margin-top: 16px;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 8px;
+                "
+              >
+                <div class="pill">📧 bhanupratap_1998@outlook.com</div>
+                <div class="pill">📧 bhanupratap@hotmail.com</div>
+                <div class="pill">📱 +81-8090687219</div>
+                <div class="pill">📍 Tokyo, Japan</div>
+              </div>
+
+              <div
+                style="
+                  margin-top: 16px;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 12px;
+                "
+              >
+                <a
+                  class="btn"
+                  href="mailto:bhanupratap_1998@outlook.com"
+                  style="
+                    text-align: center;
+                    text-decoration: none;
+                    font-size: 13px;
+                    padding: 12px 16px;
+                  "
+                >
+                  📧 Send Message
+                </a>
+                <a
+                  class="btn"
+                  href="mailto:bhanupratap_1998@hotmail.com"
+                  style="
+                    text-align: center;
+                    text-decoration: none;
+                    font-size: 13px;
+                    padding: 12px 16px;
+                  "
+                >
+                  📧 Alternative Email
+                </a>
+                <a
+                  class="ghost"
+                  href="https://github.com/bhanuhpratap-singh"
+                  target="_blank"
+                  style="
+                    text-align: center;
+                    text-decoration: none;
+                    font-size: 13px;
+                    padding: 10px 14px;
+                  "
+                >
+                  🔗 View GitHub
+                </a>
+                <a
+                  class="ghost"
+                  href="https://linkedin.com/in/iambhanu/"
+                  target="_blank"
+                  style="
+                    text-align: center;
+                    text-decoration: none;
+                    font-size: 13px;
+                    padding: 10px 14px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                  "
+                >
+                  <img
+                    src="linkedin.jpeg"
+                    alt="LinkedIn"
+                    style="width: 16px; height: 16px; border-radius: 2px"
+                  />
+                  LinkedIn Profile
+                </a>
+              </div>
+            </div>
+          </aside>
+
+          <main>
+            <section
+              class="card hero animate-section slide-left"
+              aria-label="Intro"
+            >
+              <div class="hero-left">
+                <h2>Building AI-Driven Solutions & Scalable Applications</h2>
+                <div class="role">Fullstack Developer • Gen AI • Team Lead</div>
+                <div class="cta">
+                  <button
+                    class="btn"
+                    onclick="document.getElementById('timeline').scrollIntoView({behavior:'smooth'})"
+                  >
+                    Explore My Journey
+                  </button>
+                  <button
+                    class="ghost"
+                    onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})"
+                  >
+                    Let's Connect
+                  </button>
+                </div>
+              </div>
+              <div
+                class="hero-right"
+                style="text-align: right; min-width: 250px"
+              >
+                <div
+                  style="font-size: 14px; color: var(--muted); font-weight: 600"
+                >
+                  Current Position
+                </div>
+                <div
+                  style="
+                    font-weight: 700;
+                    font-size: 18px;
+                    margin-top: 8px;
+                    background: var(--gradient-primary);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                  "
+                >
+                  Senior Fullstack Developer
+                </div>
+                <div class="muted" style="margin-top: 6px">Accenture Japan</div>
+                <div
+                  style="font-size: 12px; color: var(--muted); margin-top: 8px"
+                >
+                  5+ Years Experience • Web Development
+                </div>
+              </div>
+            </section>
+            <section
+              class="card animate-section slide-right"
+              id="timeline"
+              aria-labelledby="timelineTitle"
+            >
+              <h3 id="timelineTitle">Professional Journey</h3>
+              <div class="muted-block" style="margin-bottom: 16px">
+                My career progression and key achievements — click any entry to
+                expand and see detailed accomplishments
+              </div>
+
+              <div class="timeline-wrap">
+                <div class="timeline" id="tl">
+                  <!-- timeline items inserted by JS -->
+                </div>
+              </div>
+            </section>
+
+            <section
+              class="card animate-section slide-left"
+              aria-labelledby="projectsTitle"
+            >
+              <h3 id="projectsTitle">Featured Projects</h3>
+              <div class="muted-block" style="margin-bottom: 20px">
+                Showcasing innovative solutions and technical excellence across
+                different domains
+              </div>
+              <div class="grid" id="projects">
+                <div class="project slide-left">
+                  <div class="project-title">
+                    🚀 AI-Powered Analytics Dashboard
+                  </div>
+                  <div class="project-desc">
+                    Next.js dashboard with real-time data visualization using
+                    D3.js, integrated with Azure OpenAI for intelligent insights
+                    and predictive analytics.
+                  </div>
+                  <div class="project-tech">
+                    <span class="tech-tag">Next.js</span>
+                    <span class="tech-tag">D3.js</span>
+                    <span class="tech-tag">Azure AI</span>
+                    <span class="tech-tag">TypeScript</span>
+                  </div>
+                </div>
+                <div class="project slide-right">
+                  <div class="project-title">
+                    🤖 Multi-Solution AI Generator
+                  </div>
+                  <div class="project-desc">
+                    Scalable Node.js backend with Python integration, leveraging
+                    Google Gemini and Ollama for generating diverse AI solutions
+                    with high performance.
+                  </div>
+                  <div class="project-tech">
+                    <span class="tech-tag">Node.js</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Gemini AI</span>
+                    <span class="tech-tag">Docker</span>
+                  </div>
+                </div>
+                <div class="project slide-left">
+                  <div class="project-title">📋 Enterprise Document Portal</div>
+                  <div class="project-desc">
+                    Full-stack document management system with RBAC, AWS SSO
+                    integration, version control, and real-time collaboration
+                    features.
+                  </div>
+                  <div class="project-tech">
+                    <span class="tech-tag">React</span>
+                    <span class="tech-tag">AWS SSO</span>
+                    <span class="tech-tag">MongoDB</span>
+                    <span class="tech-tag">GraphQL</span>
+                  </div>
+                </div>
+                <div class="project slide-right">
+                  <div class="project-title">
+                    🔧 Vehicle Diagnostic Platform
+                  </div>
+                  <div class="project-desc">
+                    Automotive diagnostic portal with real-time vehicle
+                    analytics, performance monitoring, and predictive
+                    maintenance capabilities.
+                  </div>
+                  <div class="project-tech">
+                    <span class="tech-tag">React</span>
+                    <span class="tech-tag">Node.js</span>
+                    <span class="tech-tag">MySQL</span>
+                    <span class="tech-tag">REST API</span>
+                  </div>
+                </div>
+                <div class="project slide-left">
+                  <div class="project-title">
+                    🏗️ Cloud Infrastructure Automation
+                  </div>
+                  <div class="project-desc">
+                    Dockerized microservices architecture with automated CI/CD
+                    pipelines, monitoring, and scalable deployment on AWS/Azure.
+                  </div>
+                  <div class="project-tech">
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                    <span class="tech-tag">CI/CD</span>
+                    <span class="tech-tag">Kubernetes</span>
+                  </div>
+                </div>
+                <div class="project slide-right">
+                  <div class="project-title">
+                    🎯 Team Leadership & Mentoring
+                  </div>
+                  <div class="project-desc">
+                    Led 16-member cross-vendor teams, implemented agile
+                    methodologies, and mentored junior developers in modern web
+                    technologies.
+                  </div>
+                  <div class="project-tech">
+                    <span class="tech-tag">Leadership</span>
+                    <span class="tech-tag">Agile</span>
+                    <span class="tech-tag">Mentoring</span>
+                    <span class="tech-tag">Strategy</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section
+              class="card animate-section slide-right"
+              aria-labelledby="certificationsTitle"
+            >
+              <h3 id="certificationsTitle">Professional Certifications</h3>
+              <div class="muted-block" style="margin-bottom: 20px">
+                Industry-recognized certifications in cloud computing and AI
+                technologies
+              </div>
+              <div
+                class="grid"
+                style="
+                  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                "
+              >
+                <div class="project slide-left">
+                  <div class="project-title">
+                    🌩️ Google Professional Cloud Architect
+                  </div>
+                  <div class="project-desc">
+                    Advanced certification demonstrating expertise in designing
+                    and managing Google Cloud solutions.
+                  </div>
+                  <div class="project-tech">
+                    <span class="tech-tag">Google Cloud</span>
+                    <span class="tech-tag">June 2024</span>
+                  </div>
+                </div>
+                <div class="project slide-right">
+                  <div class="project-title">
+                    ☁️ Google Associate Cloud Engineer
+                  </div>
+                  <div class="project-desc">
+                    Foundational certification in Google Cloud Platform services
+                    and deployment strategies.
+                  </div>
+                  <div class="project-tech">
+                    <span class="tech-tag">GCP</span>
+                    <span class="tech-tag">May 2024</span>
+                  </div>
+                </div>
+                <div class="project slide-left">
+                  <div class="project-title">
+                    🤖 Microsoft Azure AI Engineer Associate
+                  </div>
+                  <div class="project-desc">
+                    Specialized certification in Azure AI services, machine
+                    learning, and cognitive services implementation.
+                  </div>
+                  <div class="project-tech">
+                    <span class="tech-tag">Azure AI</span>
+                    <span class="tech-tag">May 2024</span>
+                  </div>
+                </div>
+                <div class="project slide-right">
+                  <div class="project-title">
+                    🔷 Microsoft Azure Fundamentals
+                  </div>
+                  <div class="project-desc">
+                    Core certification covering Azure services, security,
+                    privacy, compliance, and trust.
+                  </div>
+                  <div class="project-tech">
+                    <span class="tech-tag">Azure</span>
+                    <span class="tech-tag">March 2024</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <footer
+              style="
+                margin-top: 32px;
+                padding: 24px;
+                text-align: center;
+                color: var(--muted);
+                font-size: 14px;
+                border-top: 2px solid var(--glass-border);
+              "
+            >
+              <div>
+                © <span id="year"></span> Bhanu Pratap Singh • Fullstack
+                Developer
+              </div>
+            </footer>
+          </main>
+        </div>
+      </div>
     </div>
 
     <script>
@@ -1120,7 +1719,7 @@
           desc: `Led a 16-member cross-vendor team, including senior engineers, to design and deliver a Document Management Portal for a major global automotive client. Oversaw end-to-end development using Next.js for frontend, with seamless integration of APIs and storage services to enable document linking, editing, and version comparison. Implemented Role-Based Access Control (RBAC) and integrated AWS SSO to ensure secure and scalable user authentication across the platform. Utilized Docker and modern DevOps practices to containerize and streamline deployments, improving reliability and reducing environment setup time. Coordinated multi-vendor collaboration, managing priorities, risks, and deliverables to ensure on-time project delivery within client expectations. Acted as a bridge between technical teams and client stakeholders, translating business requirements into scalable technical solutions. Fostered an Agile working environment by facilitating sprint planning, reviews, and retrospectives, driving team efficiency and collaboration.`,
         },
         {
-          title: "Senior FullStack Engineer",
+          title: "Senior Fullstack Engineer",
           org: "Accenture India — Bangalore",
           date: "January 2021 — August 2024",
           desc: `Contributed to the Dealer's Diagnostic Portal for a global client by implementing new features using React (frontend) and Node.js (backend). Designed and implemented UI and backend performance optimization strategies, improving portal loading times by 66% and enhancing user experience. Developed scalable and configurable backend services in Node.js to process and analyze complex real-time diagnostic data. Collaborated with cross-origin and cross-functional teams, ensuring seamless integration and delivery of features across multiple geographies. Successfully handled the project single-handedly during resource constraints, maintaining delivery timelines and client expectations. Received multiple client recognitions for exceptional contribution, ownership, and commitment to project success.`,
@@ -1129,16 +1728,40 @@
           title: "B.E. Mechanical Engineering",
           org: "Army Institute of Technology, Pune",
           date: "May 2016 — May 2020",
-          desc: `Served as Robotics Secretary, leading student initiatives in automation, coding, and Arduino-based projects. Represented the institute in Robocon and multiple IIT Techfests, winning awards for innovative robotics and automation solutions. Gained strong foundations in problem-solving, programming, and embedded systems, which fueled a transition into software development. Graduated with strong academic performance while actively participating in technical competitions and leadership roles.`,
+          desc: ``,
         },
       ];
 
       const skills = [
-        "React.js", "Next.js", "Node.js", "D3.js", "JavaScript", "HTML", "SCSS",
-        "Azure Cloud", "AWS", "Docker", "REST API", "GraphQL", 
-        "MySQL", "MongoDB", "Python", "Ollama", "Azure OpenAI", "Google Gemini",
-        "GitHub", "Jira", "Confluence", "Agile", "DevOps", "RBAC", "AWS SSO",
-        "Team Leadership", "Cross-vendor Collaboration", "Performance Optimization"
+        "React.js",
+        "Next.js",
+        "Node.js",
+        "D3.js",
+        "JavaScript",
+        "TypeScript",
+        "HTML",
+        "SCSS",
+        "Azure Cloud",
+        "AWS",
+        "Docker",
+        "REST API",
+        "GraphQL",
+        "MySQL",
+        "MongoDB",
+        "Python",
+        "Ollama",
+        "Azure OpenAI",
+        "Google Gemini",
+        "GitHub",
+        "Jira",
+        "Confluence",
+        "Agile",
+        "DevOps",
+        "RBAC",
+        "AWS SSO",
+        "Team Leadership",
+        "Cross-vendor Collaboration",
+        "Performance Optimization",
       ];
 
       // insert year
@@ -1151,15 +1774,15 @@
         el.className = "skill";
         el.textContent = skill;
         el.style.animationDelay = `${index * 0.1}s`;
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
+        el.style.opacity = "0";
+        el.style.transform = "translateY(20px)";
         skillsEl.appendChild(el);
-        
+
         // Animate in
         setTimeout(() => {
-          el.style.transition = 'all 0.6s ease';
-          el.style.opacity = '1';
-          el.style.transform = 'translateY(0)';
+          el.style.transition = "all 0.6s ease";
+          el.style.opacity = "1";
+          el.style.transform = "translateY(0)";
         }, index * 100);
       });
 
@@ -1178,31 +1801,100 @@
           item.date
         )}</div>
         </div>
-        <div class="center small" style="color: var(--accent); font-weight: 600;">
-          ${idx === 0 ? "✨ Current" : idx === 1 ? "🚀 Recent" : ""}
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div class="center small" style="color: var(--accent); font-weight: 600;">
+            ${idx === 0 ? "✨ Current" : idx === 1 ? "🚀 Recent" : ""}
+          </div>
+          ${
+            item.title !== "B.E. Mechanical Engineering"
+              ? `
+          <div class="tl-expand-btn" role="button" tabindex="0" aria-label="Expand details">
+            <span>Details</span>
+            <span class="tl-expand-icon">▼</span>
+          </div>
+          `
+              : ""
+          }
         </div>
       </div>
-      <div class="tl-desc">${escapeHtml(item.desc)}</div>
+      ${
+        item.title !== "B.E. Mechanical Engineering"
+          ? `<div class="tl-desc">${escapeHtml(item.desc)}</div>`
+          : `
+      <div class="tl-desc" style="display: block; margin-top: 20px; padding-top: 0; border-top: none;">
+        ${escapeHtml(item.desc)}
+      </div>
+      `
+      }
     `;
-        
-        // Enhanced click / keyboard handlers
-        const toggleExpansion = () => {
-          const wasExpanded = div.classList.contains("expanded");
-          // Close all other items first
-          document.querySelectorAll('.tl-item.expanded').forEach(item => {
-            if (item !== div) item.classList.remove('expanded');
+
+        // Enhanced click / keyboard handlers (only for expandable items)
+        const expandBtn = div.querySelector(".tl-expand-btn");
+        const expandIcon = div.querySelector(".tl-expand-icon");
+
+        // Only add expand functionality if this item has an expand button
+        if (expandBtn && expandIcon) {
+          const toggleExpansion = (e) => {
+            e.stopPropagation();
+            const wasExpanded = div.classList.contains("expanded");
+            // Close all other items first
+            document.querySelectorAll(".tl-item.expanded").forEach((item) => {
+              if (item !== div) {
+                item.classList.remove("expanded");
+                const otherIcon = item.querySelector(".tl-expand-icon");
+                const otherBtn = item.querySelector(
+                  ".tl-expand-btn span:first-child"
+                );
+                if (otherIcon) otherIcon.textContent = "▼";
+                if (otherBtn) otherBtn.textContent = "Details";
+              }
+            });
+            // Toggle current item
+            div.classList.toggle("expanded", !wasExpanded);
+
+            // Update button text and icon
+            if (!wasExpanded) {
+              expandIcon.textContent = "▲";
+              expandBtn.querySelector("span:first-child").textContent =
+                "Collapse";
+              expandBtn.setAttribute("aria-label", "Collapse details");
+            } else {
+              expandIcon.textContent = "▼";
+              expandBtn.querySelector("span:first-child").textContent =
+                "Details";
+              expandBtn.setAttribute("aria-label", "Expand details");
+            }
+          };
+
+          // Card click handler (for the entire card except the button)
+          const cardClickHandler = (e) => {
+            if (!e.target.closest(".tl-expand-btn")) {
+              toggleExpansion(e);
+            }
+          };
+
+          div.addEventListener("click", cardClickHandler);
+          expandBtn.addEventListener("click", toggleExpansion);
+
+          expandBtn.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              toggleExpansion(e);
+            }
           });
-          // Toggle current item
-          div.classList.toggle("expanded", !wasExpanded);
-        };
-        
-        div.addEventListener("click", toggleExpansion);
-        div.addEventListener("keydown", (e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            toggleExpansion();
-          }
-        });
+
+          div.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              if (!e.target.closest(".tl-expand-btn")) {
+                e.preventDefault();
+                toggleExpansion(e);
+              }
+            }
+          });
+        } else {
+          // For non-expandable items (like education), remove cursor pointer
+          div.style.cursor = "default";
+        }
         tl.appendChild(div);
       });
 
@@ -1274,83 +1966,207 @@
         );
       })();
 
-      /* Enhanced Timeline Animation with Staggered Effects */
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-              const delay = Array.from(entry.target.parentNode.children).indexOf(entry.target) * 150;
-              setTimeout(() => {
-                entry.target.style.transform = "translateY(0) translateX(0)";
-                entry.target.style.opacity = "1";
-              }, delay);
-            }
-          });
-        },
-        { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
-      );
-      
-      document.querySelectorAll(".tl-item").forEach((el, i) => {
-        el.style.transform = "translateY(30px) translateX(-20px)";
-        el.style.opacity = "0";
-        el.style.transition = "all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1)";
-        observer.observe(el);
-      });
-
       // Enhanced Card Hover Effects
-      document.querySelectorAll('.card').forEach(card => {
-        card.addEventListener('mouseenter', () => {
-          card.style.transform = 'translateY(-8px)';
+      document.querySelectorAll(".card").forEach((card) => {
+        card.addEventListener("mouseenter", () => {
+          card.style.transform = "translateY(-8px)";
         });
-        card.addEventListener('mouseleave', () => {
-          card.style.transform = 'translateY(0)';
+        card.addEventListener("mouseleave", () => {
+          card.style.transform = "translateY(0)";
         });
       });
 
       // Project Cards Interactive Effects
-      document.querySelectorAll('.project').forEach(project => {
-        project.addEventListener('mouseenter', () => {
-          project.querySelector('.project-title').style.color = 'var(--accent)';
+      document.querySelectorAll(".project").forEach((project) => {
+        project.addEventListener("mouseenter", () => {
+          project.querySelector(".project-title").style.color = "var(--accent)";
         });
-        project.addEventListener('mouseleave', () => {
-          project.querySelector('.project-title').style.color = 'var(--text)';
+        project.addEventListener("mouseleave", () => {
+          project.querySelector(".project-title").style.color = "var(--text)";
         });
       });
 
       // Smooth scroll with offset for sticky header
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
           e.preventDefault();
-          const target = document.querySelector(this.getAttribute('href'));
+          const target = document.querySelector(this.getAttribute("href"));
           if (target) {
-            target.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
+            const headerHeight =
+              document.querySelector(".main-header").offsetHeight;
+            const targetPosition = target.offsetTop - headerHeight - 20;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: "smooth",
             });
           }
         });
       });
 
-      // Add loading animation
-      window.addEventListener('load', () => {
-        document.body.style.opacity = '0';
-        document.body.style.transform = 'translateY(20px)';
-        document.body.style.transition = 'all 0.8s ease';
-        
+      // Enhanced Welcome Animation and Loading - Cards load on scroll
+      window.addEventListener("load", () => {
+        // Show welcome animation for shorter duration
         setTimeout(() => {
-          document.body.style.opacity = '1';
-          document.body.style.transform = 'translateY(0)';
-        }, 100);
+          const welcomeOverlay = document.getElementById("welcomeOverlay");
+          const pageContainer = document.getElementById("pageContainer");
+
+          // Fade out welcome overlay faster
+          welcomeOverlay.style.opacity = "0";
+
+          // After welcome fades, show main content
+          setTimeout(() => {
+            welcomeOverlay.style.display = "none";
+            pageContainer.classList.add("loaded");
+
+            // Only show header and sidebar initially - cards will load on scroll
+            const headerAndSidebar = document.querySelectorAll(
+              ".main-header, .sidebar"
+            );
+            headerAndSidebar.forEach((section) => {
+              section.classList.add("visible");
+            });
+
+            // Initialize scroll-triggered animations for main content cards
+            initializeScrollAnimations();
+          }, 500);
+        }, 1500);
       });
+
+      // Initialize scroll-triggered animations
+      function initializeScrollAnimations() {
+        const observerOptions = {
+          threshold: 0.15,
+          rootMargin: "0px 0px -100px 0px",
+        };
+
+        // Enhanced card observer that handles both entering and leaving
+        const cardObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              // Add a small delay for smoother effect when entering
+              setTimeout(() => {
+                entry.target.classList.add("visible");
+              }, 100);
+            } else {
+              // Remove visible class when leaving viewport
+              entry.target.classList.remove("visible");
+            }
+          });
+        }, observerOptions);
+
+        // Observe all main content cards (excluding header and sidebar)
+        const mainCards = document.querySelectorAll("main .card, main section");
+        mainCards.forEach((card) => {
+          cardObserver.observe(card);
+        });
+
+        // Enhanced timeline observer with reversible animation
+        const timelineItemObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const timelineItems = entry.target.querySelectorAll(".tl-item");
+                timelineItems.forEach((item, index) => {
+                  setTimeout(() => {
+                    item.style.transform = "translateY(0) translateX(0)";
+                    item.style.opacity = "1";
+                  }, index * 150);
+                });
+              } else {
+                // Reset timeline items when leaving viewport
+                const timelineItems = entry.target.querySelectorAll(".tl-item");
+                timelineItems.forEach((item) => {
+                  item.style.transform = "translateY(30px) translateX(-40px)";
+                  item.style.opacity = "0";
+                });
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+        );
+
+        // Observe timeline section
+        const timelineSection = document.getElementById("timeline");
+        if (timelineSection) {
+          timelineItemObserver.observe(timelineSection);
+        }
+
+        // Enhanced project observer with reversible animation
+        const projectObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const projects = entry.target.querySelectorAll(".project");
+                projects.forEach((project, index) => {
+                  setTimeout(() => {
+                    project.style.transform = "translateY(0) translateX(0)";
+                    project.style.opacity = "1";
+                  }, index * 150);
+                });
+              } else {
+                // Reset project cards when leaving viewport
+                const projects = entry.target.querySelectorAll(".project");
+                projects.forEach((project) => {
+                  // Reset to initial slide position based on class
+                  if (project.classList.contains("slide-left")) {
+                    project.style.transform =
+                      "translateX(-60px) translateY(30px)";
+                  } else if (project.classList.contains("slide-right")) {
+                    project.style.transform =
+                      "translateX(60px) translateY(30px)";
+                  } else {
+                    project.style.transform = "translateY(30px)";
+                  }
+                  project.style.opacity = "0";
+                });
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+        );
+
+        // Observe project sections
+        const projectSections = document.querySelectorAll(
+          "section[aria-labelledby='projectsTitle'], section[aria-labelledby='certificationsTitle']"
+        );
+        projectSections.forEach((section) => {
+          projectObserver.observe(section);
+        });
+      }
+
+      // Intersection Observer for scroll-triggered animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, observerOptions);
 
       // Function to update avatar with base64 image
       function updateAvatar(base64String) {
-        const avatar = document.getElementById('avatar');
+        const avatar = document.getElementById("avatar");
         avatar.innerHTML = `<img src="${base64String}" alt="Bhanu Pratap Singh - Professional Photo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;" onerror="this.parentElement.innerHTML='BP';" />`;
       }
 
       // Uncomment and add your base64 string here when ready:
       // updateAvatar('data:image/jpeg;base64,YOUR_BASE64_STRING_HERE');
     </script>
+
+    <!-- Floating Resume Download Button -->
+    <a
+      href="Bhanu-Resume.pdf"
+      target="_blank"
+      class="floating-resume-btn pulse"
+      aria-label="View Resume"
+      title="View Resume"
+    >
+      📄
+    </a>
   </body>
 </html>
