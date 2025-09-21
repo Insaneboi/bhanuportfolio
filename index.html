@@ -253,15 +253,15 @@
           margin-top: 8px;
         }
         .theme-switch {
-          height: 36px;
-          width: 68px;
+          height: 22px;
+          width: 40px;
         }
         .theme-knob {
-          height: 28px;
-          width: 28px;
+          height: 18px;
+          width: 18px;
         }
         .light .theme-knob {
-          transform: translateX(32px);
+          transform: translateX(18px);
         }
       }
       @media (max-width: 640px) {
@@ -546,13 +546,13 @@
         justify-content: space-between;
       }
       .theme-switch {
-        height: 40px;
-        width: 76px;
+        height: 24px;
+        width: 44px;
         background: var(--glass-strong);
         backdrop-filter: blur(10px);
         border: 1px solid var(--glass);
         border-radius: 999px;
-        padding: 4px;
+        padding: 2px;
         display: flex;
         align-items: center;
         cursor: pointer;
@@ -564,11 +564,11 @@
         box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
       }
       .theme-knob {
-        height: 32px;
-        width: 32px;
+        height: 20px;
+        width: 20px;
         border-radius: 50%;
         background: var(--gradient-primary);
-        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        box-shadow: 0 2px 6px rgba(16, 185, 129, 0.4);
         transform: translateX(0);
         transition: transform 0.3s ease;
         position: relative;
@@ -580,14 +580,14 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 16px;
+        font-size: 10px;
         transition: opacity 0.3s ease;
       }
       .light .theme-knob::before {
         content: "☀️";
       }
       .light .theme-knob {
-        transform: translateX(36px);
+        transform: translateX(20px);
       }
       .small {
         font-size: 14px;
@@ -1957,7 +1957,6 @@
           </div>
           <div class="header-right">
             <div class="toggle">
-              <div class="small">Theme</div>
               <div
                 class="theme-switch"
                 id="themeToggle"
